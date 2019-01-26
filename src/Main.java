@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Grid grid = new Grid(8,8);
+        Grid grid = new Grid(8,15);
 
 //        Cell cell1 = new Cell(grid, 1, 2, true);
 //        Cell cell2 = new Cell(grid,2,2,true);
@@ -23,7 +23,7 @@ public class Main {
         }
 
         Game game = new Game(grid);
-        game.run(10);
+        game.run(30);
 
     }
 }

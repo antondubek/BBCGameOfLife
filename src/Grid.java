@@ -74,6 +74,19 @@ public class Grid {
         //Display the current iteration
         System.out.println("\n Iteration " + (currentIteration + 1) + " of " + maxIterations);
 
+        boolean wider = false;
+
+        for(int y = 0; y < height; y++){
+            if(getCell(this.width-1, y).isAlive()){
+                wider = true;
+                System.out.println("hello");
+            }
+        }
+
+        if(wider){
+            grid = increaseWidth(grid);
+        }
+
 
     }
 
@@ -193,5 +206,27 @@ public class Grid {
         }
 
         return neighbours;
+    }
+
+    private Cell[][] increaseWidth(Cell[][] oldgrid){
+
+        Cell[][] newGrid = new Cell[this.width+2][this.height];
+
+        for(int x = 0; x < this.width; x++){
+            for(int y = 0; y < this.height; y++){
+                newGrid[x][y] = oldgrid[x][y];
+            }
+        }
+
+        for(int x = this.width; x <this.width+2; x++){
+            for(int y = 0; y < this.height; y++){
+                newGrid[x][y] = new Cell(this, x,y,false);
+            }
+        }
+
+        this.width += 2;
+
+        return newGrid;
+
     }
 }
