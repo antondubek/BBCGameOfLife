@@ -4,7 +4,6 @@ public class Grid {
     private int height;
 
     private Cell[][] grid;
-    private Cell[][] nextGrid;
 
     Grid(int width, int height) {
         this.width = width;
@@ -81,11 +80,11 @@ public class Grid {
     public void processCells() {
 
         //Create a new grid which will be next iteration
-        nextGrid = new Cell[width][height];
+        Cell[][] nextGrid = new Cell[width][height];
         populateGrid(nextGrid);
 
-        for (int x = 0; x < this.width - 1; x++) {
-            for (int y = 0; y < this.height - 1; y++) {
+        for (int x = 0; x < this.width; x++) {
+            for (int y = 0; y < this.height; y++) {
 
                 //Get the cell
                 Cell currentCell = getCell(x, y);
@@ -162,7 +161,7 @@ public class Grid {
         }
 
         //If the cell has space to the right
-        if (cellX != this.width) {
+        if (cellX != this.width - 1) {
             //Check right
             if (getCell(cellX + 1, cellY).isAlive()) {
                 neighbours++;
@@ -170,7 +169,7 @@ public class Grid {
         }
 
         //If the cell has space below
-        if (cellY != this.height) {
+        if (cellY != this.height - 1) {
             //Check below
             if (getCell(cellX, cellY + 1).isAlive()) {
                 neighbours++;
