@@ -6,7 +6,7 @@ public class Grid {
     private Cell[][] grid;
     private Cell[][] nextGrid;
 
-    Grid(int width, int height){
+    Grid(int width, int height) {
         this.width = width;
         this.height = height;
 
@@ -17,30 +17,30 @@ public class Grid {
         populateGrid(grid);
     }
 
-    private void populateGrid(Cell[][] populateGrid){
+    private void populateGrid(Cell[][] populateGrid) {
 
         //Iterate through the grid and create dead cells
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 populateGrid[x][y] = new Cell(this, x, y);
             }
         }
     }
 
     // Used to manually set cells, called from within Cell constructor
-    public void registerCell(int xCord, int yCord, Cell cell){
+    public void registerCell(int xCord, int yCord, Cell cell) {
         grid[xCord][yCord] = cell;
     }
 
-    private Cell getCell(int xCord, int yCord){
+    private Cell getCell(int xCord, int yCord) {
         return grid[xCord][yCord];
     }
 
 
-    public void display(int currentIteration, int maxIterations){
+    public void display(int currentIteration, int maxIterations) {
 
         //Display a line at the top
-        for(int i = 0; i <= this.width; i++){
+        for (int i = 0; i <= this.width; i++) {
             System.out.print("-");
         }
 
@@ -48,12 +48,12 @@ public class Grid {
         System.out.println();
 
 
-        for(int i = 0; i < this.height; i++){
+        for (int i = 0; i < this.height; i++) {
 
             //Add in the vertical bars
             System.out.print("|");
 
-            for(int j = 0; j < this.width; j++) {
+            for (int j = 0; j < this.width; j++) {
 
                 //Print the toString of each cell
                 System.out.print(grid[j][i].toString());
@@ -68,7 +68,7 @@ public class Grid {
         }
 
         //Print bottom of the grid
-        for(int i = 0; i <= this.width; i++){
+        for (int i = 0; i <= this.width; i++) {
             System.out.print("-");
         }
 
@@ -78,17 +78,17 @@ public class Grid {
 
     }
 
-    public void processCells(){
+    public void processCells() {
 
         //Create a new grid which will be next iteration
         nextGrid = new Cell[width][height];
         populateGrid(nextGrid);
 
-        for(int x = 1; x < this.width - 1; x++){
-            for(int y = 1; y < this.height - 1; y++){
+        for (int x = 0; x < this.width - 1; x++) {
+            for (int y = 0; y < this.height - 1; y++) {
 
                 //Get the cell
-                Cell currentCell = getCell(x,y);
+                Cell currentCell = getCell(x, y);
 
                 // Get current status of the Cell
                 boolean isAlive = currentCell.isAlive();
@@ -108,39 +108,90 @@ public class Grid {
         this.grid = nextGrid;
     }
 
-    private boolean applyRules(boolean isAlive, int aliveNeighbours){
-        if(isAlive && aliveNeighbours < 2){
+    private boolean applyRules(boolean isAlive, int aliveNeighbours) {
+        if (isAlive && aliveNeighbours < 2) {
             //Underpopulation
             return false;
-        } else if(isAlive && aliveNeighbours > 3){
+        } else if (isAlive && aliveNeighbours > 3) {
             //Overcrowding
             return false;
-        } else if(!isAlive && aliveNeighbours == 3){
+        } else if (!isAlive && aliveNeighbours == 3) {
             //Creation of life
             return true;
         } else {
+            // Stays the same
             return isAlive;
         }
     }
 
-    private int getNeighbours(Cell cell){
+    private int getNeighbours(Cell cell) {
         int neighbours = 0;
         int cellX = cell.getxCord();
         int cellY = cell.getyCord();
 
-        // Above the cell
-        if(getCell(cellX - 1, cellY - 1).isAlive()) {neighbours++;}
-        if(getCell(cellX, cellY - 1).isAlive()) {neighbours++;}
-        if(getCell(cellX + 1, cellY - 1).isAlive()) {neighbours++;}
+        // If the cell has space above it
+        if (cellY != 0) {
+            // Check above the cell
+            if (getCell(cellX, cellY - 1).isAlive()) {
+                neighbours++;
+            }
 
-        //Either side of cell
-        if(getCell(cellX - 1, cellY).isAlive()) {neighbours++;}
-        if(getCell(cellX + 1, cellY).isAlive()) {neighbours++;}
+            //If the cell has space to its left
+            if(cellX != 0){
+                //Check to its left
+                if (getCell(cellX - 1, cellY - 1).isAlive()) {
+                    neighbours++;
+                }
+            }
 
-        //Below the cell
-        if(getCell(cellX - 1, cellY + 1).isAlive()) {neighbours++;}
-        if(getCell(cellX, cellY + 1).isAlive()) {neighbours++;}
-        if(getCell(cellX + 1, cellY + 1).isAlive()) {neighbours++;}
+            //If the cell has space to the right
+            if(cellX != this.width - 1) {
+                //Check right
+                if (getCell(cellX + 1, cellY - 1).isAlive()) {
+                    neighbours++;
+                }
+            }
+        }
+
+        //If the cell has space to the left
+        if (cellX != 0) {
+            //Check its left
+            if (getCell(cellX - 1, cellY).isAlive()) {
+                neighbours++;
+            }
+        }
+
+        //If the cell has space to the right
+        if (cellX != this.width) {
+            //Check right
+            if (getCell(cellX + 1, cellY).isAlive()) {
+                neighbours++;
+            }
+        }
+
+        //If the cell has space below
+        if (cellY != this.height) {
+            //Check below
+            if (getCell(cellX, cellY + 1).isAlive()) {
+                neighbours++;
+            }
+
+            //If the cell has space to the left
+            if(cellX != 0) {
+                //Check left
+                if (getCell(cellX - 1, cellY + 1).isAlive()) {
+                    neighbours++;
+                }
+            }
+
+            //If the cell has space to the right
+            if(cellX != this.width - 1) {
+                //Check right
+                if (getCell(cellX + 1, cellY + 1).isAlive()) {
+                    neighbours++;
+                }
+            }
+        }
 
         return neighbours;
     }
