@@ -10,8 +10,9 @@ public class Game {
 
         // Runs the game for as many iterations as specified
         for(int i = 0; i < iterations; i++){
-            grid.processCells();
+
             grid.display(i, iterations);
+            grid.processCells();
         }
     }
 }

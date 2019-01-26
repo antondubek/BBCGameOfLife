@@ -4,6 +4,7 @@ public class Grid {
     private int height;
 
     private Cell[][] grid;
+    private Cell[][] nextGrid;
 
     Grid(int width, int height){
         this.width = width;
@@ -13,15 +14,15 @@ public class Grid {
         grid = new Cell[width][height];
 
         // Populate with dead cells to start
-        populateGrid();
+        populateGrid(grid);
     }
 
-    private void populateGrid(){
+    private void populateGrid(Cell[][] populateGrid){
 
         //Iterate through the grid and create dead cells
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
-                grid[x][y] = new Cell(this, x, y);
+                populateGrid[x][y] = new Cell(this, x, y);
             }
         }
     }
@@ -29,6 +30,10 @@ public class Grid {
     // Used to manually set cells, called from within Cell constructor
     public void registerCell(int xCord, int yCord, Cell cell){
         grid[xCord][yCord] = cell;
+    }
+
+    private Cell getCell(int xCord, int yCord){
+        return grid[xCord][yCord];
     }
 
 
@@ -75,5 +80,68 @@ public class Grid {
 
     public void processCells(){
 
+        //Create a new grid which will be next iteration
+        nextGrid = new Cell[width][height];
+        populateGrid(nextGrid);
+
+        for(int x = 1; x < this.width - 1; x++){
+            for(int y = 1; y < this.height - 1; y++){
+
+                //Get the cell
+                Cell currentCell = getCell(x,y);
+
+                // Get current status of the Cell
+                boolean isAlive = currentCell.isAlive();
+
+                //Check its neighbours
+                int aliveNeighbours = getNeighbours(currentCell);
+
+                //Evaluate against rules
+                isAlive = applyRules(isAlive, aliveNeighbours);
+
+                //Add cell to new grid
+                nextGrid[x][y] = new Cell(this, x, y, isAlive);
+            }
+        }
+
+        //Set the next iteration to the current iteration
+        this.grid = nextGrid;
+    }
+
+    private boolean applyRules(boolean isAlive, int aliveNeighbours){
+        if(isAlive && aliveNeighbours < 2){
+            //Underpopulation
+            return false;
+        } else if(isAlive && aliveNeighbours > 3){
+            //Overcrowding
+            return false;
+        } else if(!isAlive && aliveNeighbours == 3){
+            //Creation of life
+            return true;
+        } else {
+            return isAlive;
+        }
+    }
+
+    private int getNeighbours(Cell cell){
+        int neighbours = 0;
+        int cellX = cell.getxCord();
+        int cellY = cell.getyCord();
+
+        // Above the cell
+        if(getCell(cellX - 1, cellY - 1).isAlive()) {neighbours++;}
+        if(getCell(cellX, cellY - 1).isAlive()) {neighbours++;}
+        if(getCell(cellX + 1, cellY - 1).isAlive()) {neighbours++;}
+
+        //Either side of cell
+        if(getCell(cellX - 1, cellY).isAlive()) {neighbours++;}
+        if(getCell(cellX + 1, cellY).isAlive()) {neighbours++;}
+
+        //Below the cell
+        if(getCell(cellX - 1, cellY + 1).isAlive()) {neighbours++;}
+        if(getCell(cellX, cellY + 1).isAlive()) {neighbours++;}
+        if(getCell(cellX + 1, cellY + 1).isAlive()) {neighbours++;}
+
+        return neighbours;
     }
 }

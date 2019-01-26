@@ -19,8 +19,10 @@ public class Cell {
         this.xCord = xCord;
         this.yCord = yCord;
         this.isAlive = isAlive;
+    }
 
-        grid.registerCell(xCord, yCord, this);
+    public void register(){
+        grid.registerCell(this.xCord, this.yCord, this);
     }
 
     @Override
@@ -32,5 +34,19 @@ public class Cell {
         }
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
 
+    public int getxCord() {
+        return xCord;
+    }
+
+    public int getyCord() {
+        return yCord;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
 }
