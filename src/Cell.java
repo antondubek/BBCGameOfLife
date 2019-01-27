@@ -46,7 +46,4 @@ public class Cell {
         return yCord;
     }
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
-    }
 }

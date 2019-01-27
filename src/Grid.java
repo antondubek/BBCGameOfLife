@@ -74,19 +74,7 @@ public class Grid {
         //Display the current iteration
         System.out.println("\n Iteration " + (currentIteration + 1) + " of " + maxIterations);
 
-        boolean wider = false;
-
-        for(int y = 0; y < height; y++){
-            if(getCell(this.width-1, y).isAlive()){
-                wider = true;
-                System.out.println("hello");
-            }
-        }
-
-        if(wider){
-            grid = increaseWidth(grid);
-        }
-
+        checkEdges();
 
     }
 
@@ -208,16 +196,69 @@ public class Grid {
         return neighbours;
     }
 
-    private Cell[][] increaseWidth(Cell[][] oldgrid){
+    private void checkEdges(){
 
+        boolean widerRight = false;
+        boolean widerLeft = false;
+        boolean higherTop = false;
+        boolean higherBottom = false;
+
+
+        //Check for alive cells on right hand side
+        for(int y = 0; y < height; y++){
+            if(getCell(this.width-1, y).isAlive()){
+                widerRight = true;
+            }
+        }
+
+        //Check for alive cells on left side
+        for(int y = 0; y < height; y++){
+            if(getCell(0, y).isAlive()){
+                widerLeft = true;
+            }
+        }
+
+        // Check for alive cells at bottom
+        for(int x = 0; x < width; x++){
+            if(getCell(x, this.height-1).isAlive()){
+                higherBottom = true;
+            }
+        }
+
+        //Check for alive cells at top
+        for(int x = 0; x < width; x++){
+            if(getCell(x, 0).isAlive()){
+                higherTop = true;
+            }
+        }
+
+        if(widerRight){
+            grid = increaseWidthRight(grid);
+        }
+        if(widerLeft){
+            grid = increaseWidthLeft(grid);
+        }
+        if(higherTop){
+            grid = increaseHeightTop(grid);
+        }
+        if(higherBottom){
+            grid = increaseHeightBottom(grid);
+        }
+    }
+
+    private Cell[][] increaseWidthRight(Cell[][] oldgrid){
+
+        //Create new grid of new size
         Cell[][] newGrid = new Cell[this.width+2][this.height];
 
+        //Iterate through old grid and add cells
         for(int x = 0; x < this.width; x++){
             for(int y = 0; y < this.height; y++){
                 newGrid[x][y] = oldgrid[x][y];
             }
         }
 
+        //Populate new empty locations with dead cells
         for(int x = this.width; x <this.width+2; x++){
             for(int y = 0; y < this.height; y++){
                 newGrid[x][y] = new Cell(this, x,y,false);
@@ -229,4 +270,76 @@ public class Grid {
         return newGrid;
 
     }
+
+    private Cell[][] increaseWidthLeft(Cell[][] oldgrid){
+
+        //Create new grid of new size
+        Cell[][] newGrid = new Cell[this.width+2][this.height];
+
+        //Iterate through old grid and add cells
+        for(int x = 0; x < this.width; x++){
+            for(int y = 0; y < this.height; y++){
+                newGrid[x+2][y] = oldgrid[x][y];
+            }
+        }
+
+        //Populate new empty locations with dead cells
+        for(int x = 0; x < 2; x++){
+            for(int y = 0; y < this.height; y++){
+                newGrid[x][y] = new Cell(this, x,y,false);
+            }
+        }
+
+        this.width += 2;
+
+        return newGrid;
+    }
+
+    private Cell[][] increaseHeightBottom(Cell[][] oldgrid){
+        //Create new grid of new size
+        Cell[][] newGrid = new Cell[this.width][this.height+2];
+
+        //Iterate through old grid and add cells
+        for(int x = 0; x < this.width; x++){
+            for(int y = 0; y < this.height; y++){
+                newGrid[x][y] = oldgrid[x][y];
+            }
+        }
+
+        //Populate new empty locations with dead cells
+        for(int x = 0; x <this.width; x++){
+            for(int y = this.height; y < this.height+2; y++){
+                newGrid[x][y] = new Cell(this, x,y,false);
+            }
+        }
+
+        this.height += 2;
+
+        return newGrid;
+    }
+
+    private Cell[][] increaseHeightTop(Cell[][] oldgrid){
+        //Create new grid of new size
+        Cell[][] newGrid = new Cell[this.width][this.height+2];
+
+        //Iterate through old grid and add cells
+        for(int x = 0; x < this.width; x++){
+            for(int y = 0; y < this.height; y++){
+                newGrid[x][y + 2] = oldgrid[x][y];
+            }
+        }
+
+        //Populate new empty locations with dead cells
+        for(int x = 0; x <this.width; x++){
+            for(int y = 0; y < 2; y++){
+                newGrid[x][y] = new Cell(this, x,y,false);
+            }
+        }
+
+        this.height += 2;
+
+        return newGrid;
+    }
+
+
 }
