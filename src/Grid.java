@@ -160,7 +160,7 @@ public class Grid {
                 isAlive = applyRules(isAlive, aliveNeighbours);
 
                 //Add cell to new grid
-                nextGrid[x][y] = new Cell(this, x, y, isAlive);
+                nextGrid[x][y].setAlive(isAlive);
             }
         }
 
@@ -372,6 +372,7 @@ public class Grid {
     private Cell[][] increaseHeightBottom(Cell[][] oldgrid) {
         //Create new grid of new size
         Cell[][] newGrid = new Cell[this.width][this.height + 2];
+
 
         //Iterate through old grid and add cells
         for (int x = 0; x < this.width; x++) {

@@ -70,6 +70,15 @@ public class Cell {
     }
 
     /**
+     * Setter for isAlive
+     *
+     * @param alive Whether cell is alive or not.
+     */
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    /**
      * Setter for X co-ordinate
      *
      * @param xCord new X co-ordinate
