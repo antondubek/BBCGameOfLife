@@ -69,4 +69,11 @@ public class Cell {
         return yCord;
     }
 
+    public void setxCord(int xCord) {
+        this.xCord = xCord;
+    }
+
+    public void setyCord(int yCord) {
+        this.yCord = yCord;
+    }
 }

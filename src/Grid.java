@@ -123,7 +123,7 @@ public class Grid {
     public void processCells() {
 
         //Create a new grid which will be next iteration
-        Cell[][] nextGrid = new Cell[width][height];
+        Cell[][] nextGrid = new Cell[this.width][this.height];
 
         //Populate the new grid with dead cells
         populateGrid(nextGrid);
@@ -267,7 +267,6 @@ public class Grid {
      */
     private void checkEdges() {
 
-
         //Check for alive cells on right hand side
         for (int y = 0; y < height; y++) {
             if (getCell(this.width - 1, y).isAlive()) {
@@ -302,6 +301,13 @@ public class Grid {
 
     }
 
+    /**
+     * Increases the passed grid by 2 columns to the right.
+     * Called from checkEdges()
+     *
+     * @param oldgrid Grid to be made larger
+     * @return New larger grid.
+     */
     private Cell[][] increaseWidthRight(Cell[][] oldgrid) {
 
         //Create new grid of new size
@@ -321,12 +327,20 @@ public class Grid {
             }
         }
 
+        //Add 2 to the global width
         this.width += 2;
 
         return newGrid;
 
     }
 
+    /**
+     * Increases the passed grid by 2 columns to the left.
+     * Called from checkEdges()
+     *
+     * @param oldgrid Grid to be made larger
+     * @return New larger grid.
+     */
     private Cell[][] increaseWidthLeft(Cell[][] oldgrid) {
 
         //Create new grid of new size
@@ -346,11 +360,22 @@ public class Grid {
             }
         }
 
+        //Add 2 to the global width
         this.width += 2;
+
+        //Update the cells X and Y co-ordinates with new location
+        newGrid = updateCellLocation(newGrid);
 
         return newGrid;
     }
 
+    /**
+     * Increases the passed grid by 2 rows on the bottom.
+     * Called from checkEdges()
+     *
+     * @param oldgrid Grid to be made larger
+     * @return New larger grid.
+     */
     private Cell[][] increaseHeightBottom(Cell[][] oldgrid) {
         //Create new grid of new size
         Cell[][] newGrid = new Cell[this.width][this.height + 2];
@@ -369,19 +394,28 @@ public class Grid {
             }
         }
 
+        //Add 2 to the global height
         this.height += 2;
 
         return newGrid;
     }
 
+    /**
+     * Increases the passed grid by 2 rows on the top.
+     * Called from checkEdges()
+     *
+     * @param oldgrid Grid to be made larger
+     * @return New larger grid.
+     */
     private Cell[][] increaseHeightTop(Cell[][] oldgrid) {
         //Create new grid of new size
         Cell[][] newGrid = new Cell[this.width][this.height + 2];
 
+
         //Iterate through old grid and add cells
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                newGrid[x][y + 2] = oldgrid[x][y];
+                newGrid[x][y+2] = oldgrid[x][y];
             }
         }
 
@@ -392,9 +426,33 @@ public class Grid {
             }
         }
 
+        //Add 2 to the global height
         this.height += 2;
 
+        //Update the cells X and Y co-ordinates with new location
+        newGrid = updateCellLocation(newGrid);
+
         return newGrid;
+    }
+
+    /**
+     * When increasing the grid size left or upwards, cells co-ordinates are
+     * changed. This updates the data within the cells to their new co-ordinates.
+     *
+     * @param grid Grid to iterate through and update the cells.
+     * @return grid with updated cells.
+     */
+    private Cell[][] updateCellLocation(Cell[][] grid){
+
+        //Iterate through the grid
+        for (int x = 0; x < this.width; x++) {
+            for (int y = 0; y < this.height; y++) {
+                grid[x][y].setxCord(x); //Set the new X co-ordinate
+                grid[x][y].setyCord(y); //Set the new Y co-ordinate
+            }
+        }
+
+        return grid;
     }
 
 

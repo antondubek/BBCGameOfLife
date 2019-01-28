@@ -75,7 +75,7 @@ public class Main {
         }
 
         Game game = new Game(grid);
-        game.run(20);
+        game.run(3);
 
     }
 }
