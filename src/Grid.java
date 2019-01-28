@@ -9,6 +9,11 @@ public class Grid {
 
     private Cell[][] grid;
 
+    /*
+        Pre built arrays of neighbours to check based on position of cell.
+        Eg. topRightCords suggests the cell is in the upper right corner of grid and therefore will only
+        contain neighbour co-ordinates to the left and below it. { X, Y} Used in getNeighbours!
+    */
     private int[][] allCords = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
     private int[][] topRightCords = {{-1, 0}, {0, 1}, {-1, 1}};
     private int[][] topLeftCords = {{1, 0}, {0, 1}, {1, 1}};
@@ -200,8 +205,11 @@ public class Grid {
         int cellX = cell.getxCord();
         int cellY = cell.getyCord();
 
-        int[][] neighbourCords;
+        // Helper variable initially set to check all neighbours.
+        int[][] neighbourCords = allCords;
 
+        //Checks what location the cell is and which of its neighbours to check
+        //This avoids any array out of bounds issues by trying to look outside the grid
         if (cellX == 0 && cellY == 0) {
             neighbourCords = topLeftCords;
         } else if (cellX == this.width - 1 && cellY == this.height - 1) {
@@ -218,13 +226,21 @@ public class Grid {
             neighbourCords = rightCords;
         } else if (cellY == this.height - 1) {
             neighbourCords = bottomCords;
-        } else {
-            neighbourCords = allCords;
         }
 
+        // Return the number of neighbours
         return searchNeighbours(neighbourCords, cellX, cellY);
     }
 
+    /**
+     * Checks and keeps count of whether the neighbours around the cell
+     * are alive or not. Uses an offset based on int[][] defined at the top.
+     *
+     * @param neighbourCords Co-ordinates of neighbours (within grid) compared to cell
+     * @param cellX X co-ordinate of cell in grid
+     * @param cellY Y co-ordinate of cell in grid
+     * @return Number of alive neighbours around the cell
+     */
     private int searchNeighbours(int[][] neighbourCords, int cellX, int cellY){
         int neighbours = 0;
         for (int[] offset : neighbourCords) {
