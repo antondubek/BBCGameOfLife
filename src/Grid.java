@@ -287,7 +287,7 @@ public class Grid {
         // Check for alive cells at bottom
         for (int x = 0; x < width; x++) {
             if (getCell(x, this.height - 1).isAlive()) {
-                grid = increaseHeightTop(grid);
+                grid = increaseHeightBottom(grid);
                 break;
             }
         }
@@ -295,7 +295,7 @@ public class Grid {
         //Check for alive cells at top
         for (int x = 0; x < width; x++) {
             if (getCell(x, 0).isAlive()) {
-                grid = increaseHeightBottom(grid);
+                grid = increaseHeightTop(grid);
                 break;
             }
         }
