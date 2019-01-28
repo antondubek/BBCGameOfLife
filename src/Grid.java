@@ -237,11 +237,11 @@ public class Grid {
      * are alive or not. Uses an offset based on int[][] defined at the top.
      *
      * @param neighbourCords Co-ordinates of neighbours (within grid) compared to cell
-     * @param cellX X co-ordinate of cell in grid
-     * @param cellY Y co-ordinate of cell in grid
+     * @param cellX          X co-ordinate of cell in grid
+     * @param cellY          Y co-ordinate of cell in grid
      * @return Number of alive neighbours around the cell
      */
-    private int searchNeighbours(int[][] neighbourCords, int cellX, int cellY){
+    private int searchNeighbours(int[][] neighbourCords, int cellX, int cellY) {
         int neighbours = 0;
         for (int[] offset : neighbourCords) {
             if (getCell(cellX + offset[0], cellY + offset[1]).isAlive()) {

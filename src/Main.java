@@ -1,18 +1,52 @@
 import java.util.ArrayList;
 
+/**
+ * Main class to run the program
+ */
 public class Main {
 
     public static void main(String[] args) {
 
+        /*
+
+        * To create a game, firstly create a grid with width and height:
+
         Grid grid = new Grid(5,5);
+
+        * Create an arraylist to save starting cells:
+
+        ArrayList<Cell> cells = new ArrayList<Cell>();
+
+        * Add new Cells to the arraylist:
+
+        cells.add(new Cell(grid, 2, 1, true));
+
+        * Register the cells:
+
+        for(Cell cell : cells){
+            cell.register();
+        }
+
+        * Create a game passing it the grid:
+
+        Game game = new Game(grid);
+
+        * Run the game for as many iterations as desired:
+
+        game.run(20);
+
+         */
+
+
+        Grid grid = new Grid(5, 5);
 
 
         ArrayList<Cell> cells = new ArrayList<Cell>();
 
         //Blinker
-        cells.add(new Cell(grid, 1, 2, true));
-        cells.add(new Cell(grid,2,2,true));
-        cells.add(new Cell(grid, 3, 2, true));
+//        cells.add(new Cell(grid, 1, 2, true));
+//        cells.add(new Cell(grid,2,2,true));
+//        cells.add(new Cell(grid, 3, 2, true));
 
         //Glider top
 //        cells.add(new Cell(grid, 1, 0, true));
@@ -29,11 +63,11 @@ public class Main {
 //        cells.add(new Cell(grid, 3, 2, true));
 
         //Glider Middle
-//        cells.add(new Cell(grid, 2, 1, true));
-//        cells.add(new Cell(grid,1,3,true));
-//        cells.add(new Cell(grid, 2, 3, true));
-//        cells.add(new Cell(grid, 3, 2, true));
-//        cells.add(new Cell(grid, 3, 3, true));
+        cells.add(new Cell(grid, 2, 1, true));
+        cells.add(new Cell(grid, 1, 3, true));
+        cells.add(new Cell(grid, 2, 3, true));
+        cells.add(new Cell(grid, 3, 2, true));
+        cells.add(new Cell(grid, 3, 3, true));
 
         //Glider Upside Down - Develops big
 //        cells.add(new Cell(grid, 2, 2, true));
@@ -70,12 +104,12 @@ public class Main {
 //        cells.add(new Cell(grid, 3,0,true));
 //        cells.add(new Cell(grid, 3,1,true));
 
-        for(Cell cell : cells){
+        for (Cell cell : cells) {
             cell.register();
         }
 
         Game game = new Game(grid);
-        game.run(3);
+        game.run(20);
 
     }
 }

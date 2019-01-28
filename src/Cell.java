@@ -69,10 +69,20 @@ public class Cell {
         return yCord;
     }
 
+    /**
+     * Setter for X co-ordinate
+     *
+     * @param xCord new X co-ordinate
+     */
     public void setxCord(int xCord) {
         this.xCord = xCord;
     }
 
+    /**
+     * Setter for Y co-ordinate
+     *
+     * @param yCord new Y co-ordinate
+     */
     public void setyCord(int yCord) {
         this.yCord = yCord;
     }
