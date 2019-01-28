@@ -10,9 +10,9 @@ public class Main {
         ArrayList<Cell> cells = new ArrayList<Cell>();
 
         //Blinker
-//        cells.add(new Cell(grid, 1, 2, true));
-//        cells.add(new Cell(grid,2,2,true));
-//        cells.add(new Cell(grid, 3, 2, true));
+        cells.add(new Cell(grid, 1, 2, true));
+        cells.add(new Cell(grid,2,2,true));
+        cells.add(new Cell(grid, 3, 2, true));
 
         //Glider top
 //        cells.add(new Cell(grid, 1, 0, true));
@@ -65,10 +65,10 @@ public class Main {
 //        cells.add(new Cell(grid, 5, 2, true));
 
         //Square top middle
-        cells.add(new Cell(grid, 2,1,true));
-        cells.add(new Cell(grid, 2,0,true));
-        cells.add(new Cell(grid, 3,0,true));
-        cells.add(new Cell(grid, 3,1,true));
+//        cells.add(new Cell(grid, 2,1,true));
+//        cells.add(new Cell(grid, 2,0,true));
+//        cells.add(new Cell(grid, 3,0,true));
+//        cells.add(new Cell(grid, 3,1,true));
 
         for(Cell cell : cells){
             cell.register();

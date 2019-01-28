@@ -9,6 +9,16 @@ public class Grid {
 
     private Cell[][] grid;
 
+    private int[][] allCords = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+    private int[][] topRightCords = {{-1, 0}, {0, 1}, {-1, 1}};
+    private int[][] topLeftCords = {{1, 0}, {0, 1}, {1, 1}};
+    private int[][] bottomLeftCords = {{0, -1}, {1, -1}, {1, 0}};
+    private int[][] bottomRightCords = {{-1, -1}, {0, -1}, {-1, 0},};
+    private int[][] topCords = {{-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+    private int[][] leftCords = {{0, -1}, {1, -1}, {1, 0}, {0, 1}, {1, 1}};
+    private int[][] bottomCords = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0},};
+    private int[][] rightCords = {{-1, -1}, {0, -1}, {-1, 0}, {-1, 1}, {0, 1},};
+
     /**
      * Grid constructor, used to setup the initial empty grid based on height and width
      * passed.
@@ -48,7 +58,7 @@ public class Grid {
      *
      * @param xCord X Co-ordinate within grid to put the cell
      * @param yCord Y Co-ordinate within grid to put the cell
-     * @param cell Cell object to put into the grid.
+     * @param cell  Cell object to put into the grid.
      */
     public void registerCell(int xCord, int yCord, Cell cell) {
         grid[xCord][yCord] = cell;
@@ -72,7 +82,7 @@ public class Grid {
      * Called from within Game run() method.
      *
      * @param currentIteration Current iteration that the game is on.
-     * @param maxIterations Number of iterations the game will run for.
+     * @param maxIterations    Number of iterations the game will run for.
      */
     public void display(int currentIteration, int maxIterations) {
 
@@ -157,7 +167,7 @@ public class Grid {
      * Applies the game of life rules, checking whether a cell should
      * be dead or alive on the next iteration based on its number of neighbours.
      *
-     * @param isAlive Current status of the Cell.
+     * @param isAlive         Current status of the Cell.
      * @param aliveNeighbours Number of alive neighbours the cell has.
      * @return Whether the cell should be dead (false) or alive (true) on the next iteration.
      */
@@ -185,74 +195,41 @@ public class Grid {
      * @return Number of alive neighbours 0 - 8
      */
     private int getNeighbours(Cell cell) {
-        //Helper variable
-        int neighbours = 0;
 
         //Get the X, Y co-ordinates of the cell
         int cellX = cell.getxCord();
         int cellY = cell.getyCord();
 
-        // If the cell has space above it
-        if (cellY != 0) {
-            // Check above the cell
-            if (getCell(cellX, cellY - 1).isAlive()) {
-                neighbours++;
-            }
+        int[][] neighbourCords;
 
-            //If the cell has space to its upper left
-            if (cellX != 0) {
-                //Check to its left
-                if (getCell(cellX - 1, cellY - 1).isAlive()) {
-                    neighbours++;
-                }
-            }
-
-            //If the cell has space to the upper right
-            if (cellX != this.width - 1) {
-                //Check right
-                if (getCell(cellX + 1, cellY - 1).isAlive()) {
-                    neighbours++;
-                }
-            }
+        if (cellX == 0 && cellY == 0) {
+            neighbourCords = topLeftCords;
+        } else if (cellX == this.width - 1 && cellY == this.height - 1) {
+            neighbourCords = bottomRightCords;
+        } else if (cellX == this.width - 1 && cellY == 0) {
+            neighbourCords = topRightCords;
+        } else if (cellX == 0 && cellY == this.height - 1) {
+            neighbourCords = bottomLeftCords;
+        } else if (cellY == 0) {
+            neighbourCords = topCords;
+        } else if (cellX == 0) {
+            neighbourCords = leftCords;
+        } else if (cellX == this.width - 1) {
+            neighbourCords = rightCords;
+        } else if (cellY == this.height - 1) {
+            neighbourCords = bottomCords;
+        } else {
+            neighbourCords = allCords;
         }
 
-        //If the cell has space to the left
-        if (cellX != 0) {
-            //Check its left
-            if (getCell(cellX - 1, cellY).isAlive()) {
+        return searchNeighbours(neighbourCords, cellX, cellY);
+    }
+
+    private int searchNeighbours(int[][] neighbourCords, int cellX, int cellY){
+        int neighbours = 0;
+        for (int[] offset : neighbourCords) {
+            if (getCell(cellX + offset[0], cellY + offset[1]).isAlive()) {
                 neighbours++;
-            }
-        }
-
-        //If the cell has space to the right
-        if (cellX != this.width - 1) {
-            //Check right
-            if (getCell(cellX + 1, cellY).isAlive()) {
-                neighbours++;
-            }
-        }
-
-        //If the cell has space below
-        if (cellY != this.height - 1) {
-            //Check below
-            if (getCell(cellX, cellY + 1).isAlive()) {
-                neighbours++;
-            }
-
-            //If the cell has space to the bottom left
-            if (cellX != 0) {
-                //Check bottom left
-                if (getCell(cellX - 1, cellY + 1).isAlive()) {
-                    neighbours++;
-                }
-            }
-
-            //If the cell has space to the bottom right
-            if (cellX != this.width - 1) {
-                //Check bottom right
-                if (getCell(cellX + 1, cellY + 1).isAlive()) {
-                    neighbours++;
-                }
             }
         }
 
@@ -415,7 +392,7 @@ public class Grid {
         //Iterate through old grid and add cells
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                newGrid[x][y+2] = oldgrid[x][y];
+                newGrid[x][y + 2] = oldgrid[x][y];
             }
         }
 
@@ -442,7 +419,7 @@ public class Grid {
      * @param grid Grid to iterate through and update the cells.
      * @return grid with updated cells.
      */
-    private Cell[][] updateCellLocation(Cell[][] grid){
+    private Cell[][] updateCellLocation(Cell[][] grid) {
 
         //Iterate through the grid
         for (int x = 0; x < this.width; x++) {
