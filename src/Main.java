@@ -63,13 +63,13 @@ public class Main {
 //        cells.add(new Cell(grid, 3, 2, true));
 
         //Glider Middle
-        cells.add(new Cell(grid, 2, 1, true));
-        cells.add(new Cell(grid, 1, 3, true));
-        cells.add(new Cell(grid, 2, 3, true));
-        cells.add(new Cell(grid, 3, 2, true));
-        cells.add(new Cell(grid, 3, 3, true));
+//        cells.add(new Cell(grid, 2, 1, true));
+//        cells.add(new Cell(grid, 1, 3, true));
+//        cells.add(new Cell(grid, 2, 3, true));
+//        cells.add(new Cell(grid, 3, 2, true));
+//        cells.add(new Cell(grid, 3, 3, true));
 
-        //Glider Upside Down - Develops big
+        //Glider Upside Down - Goes up
 //        cells.add(new Cell(grid, 2, 2, true));
 //        cells.add(new Cell(grid,0,1,true));
 //        cells.add(new Cell(grid, 1, 1, true));
