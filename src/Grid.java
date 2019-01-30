@@ -14,15 +14,15 @@ public class Grid {
         Eg. topRightCords suggests the cell is in the upper right corner of grid and therefore will only
         contain neighbour co-ordinates to the left and below it. { X, Y} Used in getNeighbours!
     */
-    private int[][] allCords = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
-    private int[][] topRightCords = {{-1, 0}, {0, 1}, {-1, 1}};
-    private int[][] topLeftCords = {{1, 0}, {0, 1}, {1, 1}};
-    private int[][] bottomLeftCords = {{0, -1}, {1, -1}, {1, 0}};
-    private int[][] bottomRightCords = {{-1, -1}, {0, -1}, {-1, 0},};
-    private int[][] topCords = {{-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
-    private int[][] leftCords = {{0, -1}, {1, -1}, {1, 0}, {0, 1}, {1, 1}};
-    private int[][] bottomCords = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0},};
-    private int[][] rightCords = {{-1, -1}, {0, -1}, {-1, 0}, {-1, 1}, {0, 1},};
+    final private int[][] allCords = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+    final private int[][] topRightCords = {{-1, 0}, {0, 1}, {-1, 1}};
+    final private int[][] topLeftCords = {{1, 0}, {0, 1}, {1, 1}};
+    final private int[][] bottomLeftCords = {{0, -1}, {1, -1}, {1, 0}};
+    final private int[][] bottomRightCords = {{-1, -1}, {0, -1}, {-1, 0},};
+    final private int[][] topCords = {{-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+    final private int[][] leftCords = {{0, -1}, {1, -1}, {1, 0}, {0, 1}, {1, 1}};
+    final private int[][] bottomCords = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0},};
+    final private int[][] rightCords = {{-1, -1}, {0, -1}, {-1, 0}, {-1, 1}, {0, 1},};
 
     /**
      * Grid constructor, used to setup the initial empty grid based on height and width
@@ -202,8 +202,8 @@ public class Grid {
     private int getNeighbours(Cell cell) {
 
         //Get the X, Y co-ordinates of the cell
-        int cellX = cell.getxCord();
-        int cellY = cell.getyCord();
+        int cellX = cell.getXCord();
+        int cellY = cell.getYCord();
 
         // Helper variable initially set to check all neighbours.
         int[][] neighbourCords = allCords;
@@ -308,9 +308,7 @@ public class Grid {
 
         //Iterate through old grid and add cells
         for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
-                newGrid[x][y] = oldgrid[x][y];
-            }
+            System.arraycopy(oldgrid[x], 0, newGrid[x], 0, this.height);
         }
 
         //Populate new empty locations with dead cells
@@ -341,9 +339,7 @@ public class Grid {
 
         //Iterate through old grid and add cells
         for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
-                newGrid[x + 2][y] = oldgrid[x][y];
-            }
+            System.arraycopy(oldgrid[x], 0, newGrid[x + 2], 0, this.height);
         }
 
         //Populate new empty locations with dead cells
@@ -376,9 +372,7 @@ public class Grid {
 
         //Iterate through old grid and add cells
         for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
-                newGrid[x][y] = oldgrid[x][y];
-            }
+            System.arraycopy(oldgrid[x], 0, newGrid[x], 0, this.height);
         }
 
         //Populate new empty locations with dead cells
@@ -408,9 +402,7 @@ public class Grid {
 
         //Iterate through old grid and add cells
         for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
-                newGrid[x][y + 2] = oldgrid[x][y];
-            }
+            System.arraycopy(oldgrid[x], 0, newGrid[x], 2, this.height);
         }
 
         //Populate new empty locations with dead cells
@@ -441,8 +433,8 @@ public class Grid {
         //Iterate through the grid
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                grid[x][y].setxCord(x); //Set the new X co-ordinate
-                grid[x][y].setyCord(y); //Set the new Y co-ordinate
+                grid[x][y].setXCord(x); //Set the new X co-ordinate
+                grid[x][y].setYCord(y); //Set the new Y co-ordinate
             }
         }
 

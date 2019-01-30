@@ -5,7 +5,7 @@ public class Cell {
 
     private int xCord;
     private int yCord;
-    private Grid grid;
+    final private Grid grid;
     private boolean isAlive;
 
     /**
@@ -56,7 +56,7 @@ public class Cell {
      *
      * @return X co-ordinate of the cell.
      */
-    public int getxCord() {
+    public int getXCord() {
         return xCord;
     }
 
@@ -65,7 +65,7 @@ public class Cell {
      *
      * @return Y co-ordinate of the cell.
      */
-    public int getyCord() {
+    public int getYCord() {
         return yCord;
     }
 
@@ -83,7 +83,7 @@ public class Cell {
      *
      * @param xCord new X co-ordinate
      */
-    public void setxCord(int xCord) {
+    public void setXCord(int xCord) {
         this.xCord = xCord;
     }
 
@@ -92,7 +92,7 @@ public class Cell {
      *
      * @param yCord new Y co-ordinate
      */
-    public void setyCord(int yCord) {
+    public void setYCord(int yCord) {
         this.yCord = yCord;
     }
 }
