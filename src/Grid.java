@@ -76,7 +76,7 @@ public class Grid {
      * @param yCord Y Co-ordinate within grid to retrieve the cell.
      * @return Cell object located at X, Y location within current grid.
      */
-    private Cell getCell(int xCord, int yCord) {
+    public Cell getCell(int xCord, int yCord) {
         return grid[xCord][yCord];
     }
 
